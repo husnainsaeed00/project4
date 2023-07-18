@@ -40,26 +40,32 @@
         });
     }
 function likeHandler(id, whoYouLiked) {
+    const btn =document.getElementById(`${id}`);
     var liked = whoYouLiked.indexOf(id) >= 0;
-    var button = document.getElementById(`likeButton_${id}`);
-
-    if (liked) {
+    btn.classList.remove('fa-thumbs-up');
+    btn.classList.remove('fa-thumbs-down');
+    if (whoYouLiked.indexOf(id) >=0){
+        var liked = true;
+    }
+    else{
+        var liked = false;
+    }
+    if (liked==true) {
         fetch(`/remove_like/${id}`)
             .then(response => response.json())
             .then(result => {
-                console.log(result.message);
-                button.classList.remove('fa-thumbs-up');
-                button.classList.add('fa-thumbs-down');
+                btn.classList.add('fa-thumbs-up')
+
             });
     } else {
         fetch(`/add_like/${id}`)
             .then(response => response.json())
             .then(result => {
-                console.log(result.message);
-                button.classList.remove('fa-thumbs-down');
-                button.classList.add('fa-thumbs-up');
+                btn.classList.add('fa-thumbs-down')
+
             });
     }
+    liked = !liked
 }
 
 
